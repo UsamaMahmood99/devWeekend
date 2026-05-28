@@ -404,14 +404,22 @@ body {
 
 /* ── Responsive: 580px and below ── */
 @media (max-width: 580px) {
+  body {
+    overflow-y: auto;
+  }
+
   .app {
     justify-content: flex-start;
-    min-height: 100vh;
+    align-items: stretch;
+    min-height: 100dvh;
+    padding: 12px 0;
   }
 
   .card {
     width: 96%;
     border-radius: 12px;
+    margin: 0 auto;
+    flex-shrink: 0;
   }
 
   .body {
@@ -436,6 +444,14 @@ body {
 
   .result-card-amount.small {
     font-size: 20px;
+  }
+
+  .results-panel {
+    padding-bottom: 120px;
+  }
+
+  .text-input {
+    font-size: 16px;
   }
 }
 
