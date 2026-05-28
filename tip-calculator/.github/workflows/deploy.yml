@@ -1,11 +1,5 @@
 name: Deploy Vite App
-defaults:
-      run:
-        working-directory: ./tip-calculator
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 on:
   push:
     branches:
@@ -43,7 +37,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./tip-calculator/dist
+          path: ./dist
 
   deploy:
     environment:
