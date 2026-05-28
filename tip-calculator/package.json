@@ -8,9 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://github.com/UsamaMahmood99/devWeekend",
+  "homepage": "https://usamamahmood99.github.io/devWeekend/",
   "dependencies": {
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
