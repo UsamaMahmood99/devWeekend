@@ -1,5 +1,11 @@
 name: Deploy Vite App
+defaults:
+      run:
+        working-directory: ./tip-calculator
 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 on:
   push:
     branches:
