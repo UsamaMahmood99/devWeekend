@@ -236,17 +236,21 @@ This behavior is handled mainly through the mobile media queries.
 
 # AI Usage
 
-## AI Tools Used
-
 I used ChatGPT during development for:
 
-1. GitHub Actions deployment troubleshooting
-    I used AI to debug why the app was not deploying correctly to GitHub Pages and to identify issues with the workflow, branch setup, and deployment configuration as gh-pages branch was not being made so i figured it out it needed different config as i was using vite. this was also my first time creating a yml file so i used config from chatgpt.
-2. GitHub Pages + Vite configuration
-    then i correctly configured the Vite base path, homepage URL as i was using github.com instead of github.io, and deployment settings required for GitHub Pages hosting such as deploying from gh-pages branch instead of main branch.
-3. README drafting
-    I used AI to help structure and format the project README, i knew setup instructions, deployment details, and technical explanations but was not familiar with formatting a readme file so asked chatgpt to convert my text into a reaadme format.
+## GitHub Actions deployment troubleshooting
+* I used AI to debug why the app was not deploying correctly to GitHub Pages and to identify issues with the workflow, branch setup, and deployment configuration as gh-pages branch was not being made so i figured it out it needed different config as i was using vite. this was also my first time creating a yml file so i used config from chatgpt.
+## GitHub Pages + Vite configuration
+* then i correctly configured the Vite base path, homepage URL as i was using github.com instead of github.io, and deployment settings required for GitHub Pages hosting such as deploying from gh-pages branch instead of main branch.
+## README drafting
+* I used AI to help structure and format the project README, i knew setup instructions, deployment details, and technical explanations but was not familiar with formatting a readme file so asked chatgpt to convert my text into a reaadme format.
 
 ---
+# Area of Improvement
+* I need to strengthen my CSS fundamentals further so I can rely less on templates and prebuilt UI components and build more custom interfaces confidently.
+* I want to apply clean code principles more consistently, especially around component structure, naming, and code organization.
+* I need to deepen my understanding of React hooks such as useRef and useMemo, particularly around optimization and advanced state handling patterns.
+* My UI and frontend system design decision-making still needs significant improvement.
+
 
 
