@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import "./App.css"
 
 /* ── Regex: only digits and one optional decimal point ── */
@@ -6,8 +6,22 @@ const DECIMAL_REGEX = /^\d*\.?\d*$/;
 const INTEGER_REGEX = /^\d*$/;
 
 const PRESETS = [5, 10, 20];
+function fmt(n) {
+  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
 
+function blockInvalidKeys(e) {
+  if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === "E") {
+    e.preventDefault();
+  }
+}
 
+/* For integer fields: also block the decimal point */
+function blockIntegerKeys(e) {
+  if (e.key === "-" || e.key === "+" || e.key === "e" || e.key === "E" || e.key === ".") {
+    e.preventDefault();
+  }
+}
 
 export default function TipCalculator() {
   const [bill, setBill]           = useState("");
@@ -16,6 +30,46 @@ export default function TipCalculator() {
   const [tipCustom, setTipCustom] = useState("");
   const [errors, setErrors]       = useState({});
 
+  /* Effective tip percentage — null if no valid tip selected */
+  const tipPct = useMemo(() => {
+    if (tipPreset !== null) return tipPreset;
+    if (tipCustom === "") return null;
+    const v = parseFloat(tipCustom);
+    return isNaN(v) ? null : v;
+  }, [tipPreset, tipCustom]);
+
+    /* Only compute results when ALL inputs are valid and positive */
+const computed = useMemo(() => {
+  const b = parseFloat(bill);
+  const p = parseInt(people, 10);
+
+  const billOk = !isNaN(b) && b > 0;
+  const peopleOk = !isNaN(p) && p > 0;
+  const tipOk = tipPct !== null && tipPct >= 0 && !errors.tip;
+
+  if (!billOk || !peopleOk || !tipOk) return null;
+
+  /* Convert bill into integer cents */
+  const billCents = Math.round(b * 100);
+
+  /* Calculate tip in cents */
+  const tipCents = Math.round(billCents * tipPct / 100);
+
+  /* Total cents */
+  const totalCents = billCents + tipCents;
+
+  /* Per person values */
+  const perPersonCents = totalCents / p;
+  const tipPerPersonCents = tipCents / p;
+
+  /* Convert back to dollars */
+  return {
+    tipTotal: tipCents / 100,
+    totalBill: totalCents / 100,
+    perPerson: perPersonCents / 100,
+    tipPerPerson: tipPerPersonCents / 100
+  };
+}, [bill, people, tipPct, errors.tip]);
   function handleBill(e) {
     const val = e.target.value;
     if (val !== "" && !DECIMAL_REGEX.test(val)) return;
@@ -56,9 +110,8 @@ export default function TipCalculator() {
 
           {/* Header */}
           <div className="card-header">
-            <div>
+            <div className="card-header-inner">
               <h1>Tip Calculator</h1>
-              <p>Split the bill — live, no button needed</p>
             </div>
           </div>
           {/* Body */}
@@ -80,7 +133,7 @@ export default function TipCalculator() {
                     onChange={handleBill}
                   />
                 </div>
-                {errors.bill && <span className="error-msg">⚠ {errors.bill}</span>}
+                {errors.bill && <span className="error-msg"> {errors.bill}</span>}
               </div>
 
               {/* Tip */}
@@ -111,7 +164,7 @@ export default function TipCalculator() {
                   />
                   <span className="input-suffix">%</span>
                 </div>
-                {errors.tip && <span className="error-msg">⚠ {errors.tip}</span>}
+                {errors.tip && <span className="error-msg"> {errors.tip}</span>}
               </div>
 
               {/* People */}
@@ -126,7 +179,7 @@ export default function TipCalculator() {
                     onChange={handlePeople}
                   />
                 </div>
-                {errors.people && <span className="error-msg">⚠ {errors.people}</span>}
+                {errors.people && <span className="error-msg"> {errors.people}</span>}
               </div>
             </div>      
           </div>
@@ -134,21 +187,21 @@ export default function TipCalculator() {
             {/* ── Results ── */}
             <div className="results-panel">
               <div className="results-panel-inner">
-              {computed ? (
+             {computed ? (
                 <>
                   <div className="result-card primary">
                     <div className="result-card-inner">
                       <div className="result-card-label">Each person pays</div>
-                      <div className="result-card-amount">$</div>
-                      <div className="result-card-sub">includes tipPerPerson </div>
+                      <div className="result-card-amount">${fmt(computed.perPerson)}</div>
+                      <div className="result-card-sub">includes ${fmt(computed.tipPerPerson)} tip</div>
                     </div>
                   </div>
 
                   <div className="result-card">
                     <div className="result-card-inner">
                       <div className="result-card-label">Total tip</div>
-                      <div className="result-card-amount small">$tipTotal</div>
-                      <div className="result-card-sub">at tip%</div>
+                      <div className="result-card-amount small">${fmt(computed.tipTotal)}</div>
+                      <div className="result-card-sub">at {tipPct}%</div>
                     </div>
                   </div>
 
@@ -159,25 +212,25 @@ export default function TipCalculator() {
                     <div className="breakdown-row">
                       <div className="breakdown-row-inner">
                         <span className="breakdown-key">Bill subtotal</span>
-                        <span className="breakdown-val">$bill</span>
+                        <span className="breakdown-val">${fmt(parseFloat(bill))}</span>
                       </div>
                     </div>
                     <div className="breakdown-row">
                       <div className="breakdown-row-inner">
-                        <span className="breakdown-key">Tip %</span>
-                        <span className="breakdown-val">$tipTotal</span>
+                        <span className="breakdown-key">Tip ({tipPct}%)</span>
+                        <span className="breakdown-val">${fmt(computed.tipTotal)}</span>
                       </div>
                     </div>
                     <div className="breakdown-row">
                       <div className="breakdown-row-inner">
                         <span className="breakdown-key">Grand total</span>
-                        <span className="breakdown-val">$totalBill</span>
+                        <span className="breakdown-val">${fmt(computed.totalBill)}</span>
                       </div>
                     </div>
                     <div className="breakdown-row">
                       <div className="breakdown-row-inner">
-                        <span className="breakdown-key">÷ people</span>
-                        <span className="breakdown-val accent">$perPerson</span>
+                        <span className="breakdown-key">÷ {parseInt(people)} people</span>
+                        <span className="breakdown-val accent">${fmt(computed.perPerson)}</span>
                       </div>
                     </div>
                   </div>
