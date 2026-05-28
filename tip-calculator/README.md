@@ -1,73 +1,152 @@
-# React + TypeScript + Vite
+# Tip Calculator & Bill Splitter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive React web application that calculates tips and splits bills between multiple people in real time.
 
-Currently, two official plugins are available:
+Built using **React**, **TypeScript**, and **Vite** with automatic deployment using **GitHub Actions** and **GitHub Pages**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+https://usamamahmood99.github.io/devWeekend/
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* Real-time bill calculation
+* Tip percentage preset buttons
+* Custom tip percentage input
+* Split bill among multiple people
+* Instant UI updates without a calculate button
+* Responsive design for mobile and desktop
+* Clean and modern interface
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Tech Stack
+
+* React
+* TypeScript
+* Vite
+* CSS3
+* GitHub Actions
+* GitHub Pages
+
+---
+
+# Project Structure
+
+```bash
+tip-calculator/
+├── public/
+├── src/
+│   ├── App.tsx
+│   ├── App.css
+│   ├── main.tsx
+│   └── assets/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+├── package.json
+├── vite.config.ts
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Clone Repository
+
+```bash
+git clone https://github.com/UsamaMahmood99/devWeekend.git
 ```
+
+## Navigate to Project
+
+```bash
+cd devWeekend
+```
+
+## Install Dependencies
+
+```bash
+npm install
+```
+
+## Start Development Server
+
+```bash
+npm run dev
+```
+
+---
+
+# Build Project
+
+```bash
+npm run build
+```
+
+---
+
+# Preview Production Build
+
+```bash
+npm run preview
+```
+
+---
+
+# Deployment
+
+This project uses GitHub Actions for automatic deployment to GitHub Pages.
+
+Every push to the `main` branch automatically:
+
+1. Installs dependencies
+2. Builds the Vite project
+3. Deploys the app to GitHub Pages
+
+---
+
+# GitHub Actions Workflow
+
+Workflow file location:
+
+```bash
+.github/workflows/deploy.yml
+```
+
+---
+
+# Vite Configuration for GitHub Pages
+
+GitHub Pages requires a proper `base` configuration.
+
+```ts
+export default defineConfig({
+  plugins: [react()],
+  base: '/devWeekend/',
+})
+```
+
+---
+
+# Available Scripts
+
+| Command         | Description              |
+| --------------- | ------------------------ |
+| npm run dev     | Start development server |
+| npm run build   | Build production app     |
+| npm run preview | Preview production build |
+| npm run deploy  | Deploy using gh-pages    |
+
+
+
+# Author
+
+Usama Mahmood
+
+GitHub: https://github.com/UsamaMahmood99
