@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d build"
   },
+  "homepage": "https://github.com/UsamaMahmood99/devWeekend",
   "dependencies": {
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
