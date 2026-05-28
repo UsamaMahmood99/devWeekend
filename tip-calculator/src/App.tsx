@@ -131,6 +131,7 @@ const computed = useMemo(() => {
                     placeholder="0.00"
                     value={bill}
                     onChange={handleBill}
+                    onKeyDown={blockInvalidKeys}
                   />
                 </div>
                 {errors.bill && <span className="error-msg"> {errors.bill}</span>}
@@ -161,6 +162,7 @@ const computed = useMemo(() => {
                     placeholder="Custom %"
                     value={tipCustom}
                     onChange={handleTipCustom}
+                    onKeyDown={blockInvalidKeys}
                   />
                   <span className="input-suffix">%</span>
                 </div>
@@ -177,6 +179,7 @@ const computed = useMemo(() => {
                     placeholder="1"
                     value={people}
                     onChange={handlePeople}
+                    onKeyDown={blockIntegerKeys}
                   />
                 </div>
                 {errors.people && <span className="error-msg"> {errors.people}</span>}
